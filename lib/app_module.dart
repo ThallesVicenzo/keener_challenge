@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/routes/named_routes.dart';
+import 'package:keener_challenge/features/sign_up/sign_up_module.dart';
 import 'package:keener_challenge/features/welcome/welcome_module.dart';
 
 class AppModule extends Module {
@@ -14,6 +15,10 @@ class AppModule extends Module {
     r.module(
       NamedRoutes.welcome.route,
       module: WelcomeModule(),
+    );
+    r.module(
+      NamedRoutes.signUp.route,
+      module: SignUpModule(),
     );
     super.routes(r);
   }

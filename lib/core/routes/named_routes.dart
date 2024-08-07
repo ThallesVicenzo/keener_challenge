@@ -1,5 +1,6 @@
 enum NamedRoutes {
-  welcome('/welcome');
+  welcome('/welcome'),
+  signUp('/sign-up');
 
   final String route;
 
