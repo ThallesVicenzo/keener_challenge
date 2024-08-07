@@ -25,7 +25,7 @@ class AppPrimaryButton extends StatelessWidget {
           color: Colors.deepPurple,
         ),
         height: 52,
-        width: double.infinity,
+        width: MediaQuery.sizeOf(context).width * 0.9,
         child: Stack(
           children: [
             Align(
