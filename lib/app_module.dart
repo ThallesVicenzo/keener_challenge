@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/routes/named_routes.dart';
-import 'package:keener_challenge/features/welcome/presenter/welcome_module.dart';
+import 'package:keener_challenge/features/welcome/welcome_module.dart';
 
 class AppModule extends Module {
   @override
