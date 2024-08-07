@@ -41,6 +41,8 @@ dependencies:
   firebase_analytics: ^11.2.1
   firebase_crashlytics: ^4.0.4
   google_fonts: ^6.2.1
+  dartz: ^0.10.1
+  mobx: ^2.3.3+2
 
 dev_dependencies:
   flutter_test:
