@@ -88,14 +88,15 @@ class _SignUpPageState extends State<SignUpPage> {
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Form(
                               key: widget.controller.formKeys[2],
-                              child: AppTextFormField(
-                                hintText: 'Type your password here...',
-                                controller: widget.controller.controllers[2],
-                                obscureText: widget.controller.obscurePassword,
-                                validator: (value) =>
-                                    widget.controller.validatePassword(value),
-                                sufix: Observer(
-                                  builder: (context) => Padding(
+                              child: Observer(
+                                builder: (_) => AppTextFormField(
+                                  hintText: 'Type your password here...',
+                                  controller: widget.controller.controllers[2],
+                                  obscureText:
+                                      widget.controller.obscurePassword,
+                                  validator: (value) =>
+                                      widget.controller.validatePassword(value),
+                                  sufix: Padding(
                                     padding: const EdgeInsets.only(top: 5),
                                     child: GestureDetector(
                                       onTap: () {
@@ -116,16 +117,16 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           Form(
                             key: widget.controller.formKeys[3],
-                            child: AppTextFormField(
-                              hintText: 'Confirm password...',
-                              validator: (value) => widget.controller
-                                  .validateConfirmPassword(value),
-                              controller: widget.controller.controllers[3],
-                              obscureText:
-                                  widget.controller.obscureConfirmPassword,
-                              keyboardType: TextInputType.emailAddress,
-                              sufix: Observer(
-                                builder: (context) => Padding(
+                            child: Observer(
+                              builder: (_) => AppTextFormField(
+                                hintText: 'Confirm password...',
+                                validator: (value) => widget.controller
+                                    .validateConfirmPassword(value),
+                                controller: widget.controller.controllers[3],
+                                obscureText:
+                                    widget.controller.obscureConfirmPassword,
+                                keyboardType: TextInputType.emailAddress,
+                                sufix: Padding(
                                   padding: const EdgeInsets.only(top: 5),
                                   child: GestureDetector(
                                     onTap: () {
