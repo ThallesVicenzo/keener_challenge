@@ -19,7 +19,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
       final request =
           await dataSource.registerAccount(email: email, password: password);
       return Right(request);
-    } on FirebaseException catch (e) {
+    } on FirebaseAuthException catch (e) {
       return Left(
         GenericFailure(
           e.message!,
