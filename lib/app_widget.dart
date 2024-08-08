@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/routes/named_routes.dart';
@@ -9,7 +10,11 @@ class KeenerChallenge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Modular.setInitialRoute(NamedRoutes.welcome.route);
+    if (FirebaseAuth.instance.currentUser?.uid != null) {
+      Modular.setInitialRoute(NamedRoutes.home.route);
+    } else {
+      Modular.setInitialRoute(NamedRoutes.welcome.route);
+    }
     return MaterialApp.router(
       title: 'Keener-Challenge',
       debugShowCheckedModeBanner: false,
