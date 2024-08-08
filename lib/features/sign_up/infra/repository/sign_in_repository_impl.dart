@@ -22,7 +22,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
     } on FirebaseAuthException catch (e) {
       return Left(
         GenericFailure(
-          e.message!,
+          e.message,
         ),
       );
     } catch (e) {
