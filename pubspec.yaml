@@ -45,6 +45,8 @@ dependencies:
   mobx: ^2.3.3+2
   equatable: ^2.0.5
   flutter_mobx: ^2.2.1+1
+  email_validator: ^3.0.0
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:
