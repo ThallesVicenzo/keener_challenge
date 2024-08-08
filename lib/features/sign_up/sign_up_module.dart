@@ -10,10 +10,19 @@ import 'package:keener_challenge/features/sign_up/presenter/pages/sign_up_page.d
 class SignUpModule extends Module {
   @override
   void binds(Injector i) {
-    i.add<SignUpDatasource>(SignUpDataSourceImpl.new);
+    i.addInstance<SignUpDatasource>(
+      SignUpDataSourceImpl(
+        Modular.get(key: 'auth'),
+      ),
+    );
     i.add<SignUpRepository>(SignUpRepositoryImpl.new);
     i.add<SignUpUsecase>(SignUpUsecaseImpl.new);
-    i.add<SignUpController>(SignUpController.new);
+    i.addInstance<SignUpController>(
+      SignUpController(
+        secureStorage: Modular.get(key: 'storage'),
+        usecase: i<SignUpUsecase>(),
+      ),
+    );
     super.binds(i);
   }
 
@@ -21,7 +30,9 @@ class SignUpModule extends Module {
   void routes(RouteManager r) {
     r.child(
       '/',
-      child: (context) => const SignUpPage(),
+      child: (context) => SignUpPage(
+        controller: context.read<SignUpController>(),
+      ),
       transition: TransitionType.rightToLeft,
     );
     super.routes(r);
