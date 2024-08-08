@@ -47,7 +47,7 @@ class ShowInformation<S extends Object?> extends PageState<S> {
   factory ShowInformation.fromErrorState(ErrorState state, String? message) {
     return _ShowInfoErrorState<S>(
       error: state.error,
-      message: message ?? state.error.message,
+      message: message ?? state.error.message!,
     );
   }
 
