@@ -13,7 +13,8 @@ part 'login_controller.g.dart';
 class LoginController = LoginControllerBase with _$LoginController;
 
 abstract class LoginControllerBase with Store {
-  final state = ValueNotifier<PageState<UserCredential>>(InitialState());
+  @observable
+  PageState<UserCredential> state = InitialState();
 
   LoginControllerBase({required this.usecase});
 
@@ -61,7 +62,7 @@ abstract class LoginControllerBase with Store {
   Future<void> login(context) async {
     if (formKeys[0].currentState!.validate() &&
         formKeys[1].currentState!.validate()) {
-      state.value = LoadingState();
+      state = LoadingState();
 
       final result = await usecase.login(
         email: controllers[0].text,
@@ -70,7 +71,7 @@ abstract class LoginControllerBase with Store {
 
       result.fold(
         (l) {
-          state.value = ErrorState(error: l);
+          state = ErrorState(error: l);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: AppText(
@@ -85,7 +86,7 @@ abstract class LoginControllerBase with Store {
         },
         (r) async {
           Modular.to.navigate(NamedRoutes.home.route);
-          state.value = SuccessState(data: r);
+          state = SuccessState(data: r);
         },
       );
     }

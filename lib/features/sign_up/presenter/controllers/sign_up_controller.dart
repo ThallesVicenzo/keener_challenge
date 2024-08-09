@@ -17,7 +17,8 @@ abstract class SignUpControllerBase with Store {
 
   final SignUpUsecase usecase;
 
-  final state = ValueNotifier<PageState<UserCredential>>(InitialState());
+  @observable
+  PageState<UserCredential> state = InitialState();
 
   @observable
   bool obscurePassword = true;
@@ -79,7 +80,7 @@ abstract class SignUpControllerBase with Store {
     if (formKeys[0].currentState!.validate() &&
         formKeys[1].currentState!.validate() &&
         formKeys[2].currentState!.validate()) {
-      state.value = LoadingState();
+      state = LoadingState();
 
       final result = await usecase.createAccount(
         email: controllers[0].text,
@@ -88,7 +89,7 @@ abstract class SignUpControllerBase with Store {
 
       result.fold(
         (l) {
-          state.value = ErrorState(error: l);
+          state = ErrorState(error: l);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: AppText(
@@ -103,7 +104,7 @@ abstract class SignUpControllerBase with Store {
         },
         (r) async {
           Modular.to.navigate(NamedRoutes.home.route);
-          state.value = SuccessState(data: r);
+          state = SuccessState(data: r);
         },
       );
     }

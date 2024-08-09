@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:keener_challenge/core/page_state.dart';
@@ -26,9 +25,10 @@ class _LoginPageState extends State<LoginPage> {
         title: 'Login',
         hasLeading: true,
       ),
-      body: ValueListenableBuilder<PageState<UserCredential>>(
-        valueListenable: widget.controller.state,
-        builder: (context, state, child) {
+      body: Observer(
+        builder: (context) {
+          final state = widget.controller.state;
+
           if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
