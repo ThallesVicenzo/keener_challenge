@@ -1,5 +1,5 @@
 enum SecureStorageKeys {
-  username('username');
+  userId('userId');
 
   const SecureStorageKeys(this.key);
 
