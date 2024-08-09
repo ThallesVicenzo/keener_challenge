@@ -13,6 +13,7 @@ class LoginModule extends Module {
     i.addInstance<LoginDatasource>(
       LoginDataSourceImpl(
         Modular.get(key: 'auth'),
+        Modular.get(key: 'storage'),
       ),
     );
     i.add<LoginRepository>(LoginRepositoryImpl.new);
