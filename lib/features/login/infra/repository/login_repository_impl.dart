@@ -21,7 +21,7 @@ class LoginRepositoryImpl implements LoginRepository {
       return Right(request);
     } on FirebaseAuthException catch (e) {
       return Left(
-        GenericFailure(
+        NetworkFailure(
           e.message,
         ),
       );

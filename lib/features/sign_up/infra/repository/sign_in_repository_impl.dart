@@ -21,7 +21,7 @@ class SignUpRepositoryImpl implements SignUpRepository {
       return Right(request);
     } on FirebaseAuthException catch (e) {
       return Left(
-        GenericFailure(
+        NetworkFailure(
           e.message,
         ),
       );
