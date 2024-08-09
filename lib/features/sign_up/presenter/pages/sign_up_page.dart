@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
-                      height: 410,
+                      height: 340,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.deepPurple,
@@ -62,36 +62,27 @@ class _SignUpPageState extends State<SignUpPage> {
                               color: Colors.white,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Form(
-                              key: widget.controller.formKeys[0],
-                              child: AppTextFormField(
-                                controller: widget.controller.controllers[0],
-                                validator: (value) =>
-                                    widget.controller.validateUsername(value),
-                                hintText: 'Type your username here...',
-                              ),
-                            ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Form(
-                            key: widget.controller.formKeys[1],
+                            key: widget.controller.formKeys[0],
                             child: AppTextFormField(
                               hintText: 'Type your email here...',
                               validator: (value) =>
                                   widget.controller.validateEmail(value),
-                              controller: widget.controller.controllers[1],
+                              controller: widget.controller.controllers[0],
                               keyboardType: TextInputType.emailAddress,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Form(
-                              key: widget.controller.formKeys[2],
+                              key: widget.controller.formKeys[1],
                               child: Observer(
                                 builder: (_) => AppTextFormField(
                                   hintText: 'Type your password here...',
-                                  controller: widget.controller.controllers[2],
+                                  controller: widget.controller.controllers[1],
                                   obscureText:
                                       widget.controller.obscurePassword,
                                   validator: (value) =>
@@ -116,13 +107,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                           Form(
-                            key: widget.controller.formKeys[3],
+                            key: widget.controller.formKeys[2],
                             child: Observer(
                               builder: (_) => AppTextFormField(
                                 hintText: 'Confirm password...',
                                 validator: (value) => widget.controller
                                     .validateConfirmPassword(value),
-                                controller: widget.controller.controllers[3],
+                                controller: widget.controller.controllers[2],
                                 obscureText:
                                     widget.controller.obscureConfirmPassword,
                                 keyboardType: TextInputType.emailAddress,

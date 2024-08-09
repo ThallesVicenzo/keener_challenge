@@ -5,8 +5,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/page_state.dart';
 import 'package:keener_challenge/core/presenter/widgets/text/app_text.dart';
 import 'package:keener_challenge/core/routes/named_routes.dart';
-import 'package:keener_challenge/core/secure_storage/keys/secure_storage_keys.dart';
-import 'package:keener_challenge/core/secure_storage/secure_storage.dart';
 import 'package:keener_challenge/features/sign_up/domain/usecase/sign_up_usecase.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,10 +13,9 @@ part 'sign_up_controller.g.dart';
 class SignUpController = SignUpControllerBase with _$SignUpController;
 
 abstract class SignUpControllerBase with Store {
-  SignUpControllerBase({required this.usecase, required this.secureStorage});
+  SignUpControllerBase({required this.usecase});
 
   final SignUpUsecase usecase;
-  final SecureStorage secureStorage;
 
   final state = ValueNotifier<PageState<UserCredential>>(InitialState());
 
@@ -32,11 +29,9 @@ abstract class SignUpControllerBase with Store {
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
-    GlobalKey<FormState>(),
   ];
 
   final controllers = <TextEditingController>[
-    TextEditingController(),
     TextEditingController(),
     TextEditingController(),
     TextEditingController(),
@@ -50,16 +45,6 @@ abstract class SignUpControllerBase with Store {
   @action
   void changeConfirmPasswordVisibility() {
     obscureConfirmPassword = !obscureConfirmPassword;
-  }
-
-  String? validateUsername(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Can\'t be empty!';
-    } else if (value.length > 10) {
-      return 'Username can\'t have more than 10 characters.';
-    }
-
-    return null;
   }
 
   String? validateEmail(String? value) {
@@ -83,7 +68,7 @@ abstract class SignUpControllerBase with Store {
   }
 
   String? validateConfirmPassword(String? value) {
-    if (controllers[2].text != controllers[3].text) {
+    if (controllers[1].text != controllers[2].text) {
       return 'Passwords must be equal!';
     }
     return null;
@@ -93,13 +78,12 @@ abstract class SignUpControllerBase with Store {
   Future<void> createAccount(context) async {
     if (formKeys[0].currentState!.validate() &&
         formKeys[1].currentState!.validate() &&
-        formKeys[2].currentState!.validate() &&
-        formKeys[3].currentState!.validate()) {
+        formKeys[2].currentState!.validate()) {
       state.value = LoadingState();
 
       final result = await usecase.createAccount(
-        email: controllers[1].text,
-        password: controllers[2].text,
+        email: controllers[0].text,
+        password: controllers[1].text,
       );
 
       result.fold(
@@ -118,10 +102,6 @@ abstract class SignUpControllerBase with Store {
           );
         },
         (r) async {
-          await secureStorage.write(
-            key: SecureStorageKeys.username.key,
-            value: controllers[0].text,
-          );
           Modular.to.navigate(NamedRoutes.home.route);
           state.value = SuccessState(data: r);
         },

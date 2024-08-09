@@ -13,16 +13,12 @@ class SignUpModule extends Module {
     i.addInstance<SignUpDatasource>(
       SignUpDataSourceImpl(
         Modular.get(key: 'auth'),
+        Modular.get(key: 'storage'),
       ),
     );
     i.add<SignUpRepository>(SignUpRepositoryImpl.new);
     i.add<SignUpUsecase>(SignUpUsecaseImpl.new);
-    i.addInstance<SignUpController>(
-      SignUpController(
-        secureStorage: Modular.get(key: 'storage'),
-        usecase: i<SignUpUsecase>(),
-      ),
-    );
+    i.add<SignUpController>(SignUpController.new);
     super.binds(i);
   }
 
