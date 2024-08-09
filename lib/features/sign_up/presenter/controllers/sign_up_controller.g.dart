@@ -46,8 +46,8 @@ mixin _$SignUpController on SignUpControllerBase, Store {
       AsyncAction('SignUpControllerBase.createAccount', context: context);
 
   @override
-  Future<void> createAccount() {
-    return _$createAccountAsyncAction.run(() => super.createAccount());
+  Future<void> createAccount(dynamic context) {
+    return _$createAccountAsyncAction.run(() => super.createAccount(context));
   }
 
   late final _$SignUpControllerBaseActionController =

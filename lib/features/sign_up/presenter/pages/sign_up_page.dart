@@ -152,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: AppPrimaryButton(
                         title: 'Create user account',
                         onTap: () {
-                          widget.controller.createAccount();
+                          widget.controller.createAccount(context);
                         },
                       ),
                     ),

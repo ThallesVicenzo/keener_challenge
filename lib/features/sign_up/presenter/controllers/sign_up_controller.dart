@@ -1,8 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/page_state.dart';
+import 'package:keener_challenge/core/presenter/widgets/text/app_text.dart';
 import 'package:keener_challenge/core/routes/named_routes.dart';
 import 'package:keener_challenge/core/secure_storage/keys/secure_storage_keys.dart';
 import 'package:keener_challenge/core/secure_storage/secure_storage.dart';
@@ -89,7 +90,7 @@ abstract class SignUpControllerBase with Store {
   }
 
   @action
-  Future<void> createAccount() async {
+  Future<void> createAccount(context) async {
     if (formKeys[0].currentState!.validate() &&
         formKeys[1].currentState!.validate() &&
         formKeys[2].currentState!.validate() &&
@@ -102,7 +103,20 @@ abstract class SignUpControllerBase with Store {
       );
 
       result.fold(
-        (l) => state.value = ErrorState(error: l),
+        (l) {
+          state.value = ErrorState(error: l);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: AppText(
+                l.message ?? 'Invalid user, please try again.',
+                style: MyTextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.deepPurple,
+            ),
+          );
+        },
         (r) async {
           await secureStorage.write(
             key: SecureStorageKeys.username.key,
