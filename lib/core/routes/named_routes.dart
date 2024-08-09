@@ -2,7 +2,9 @@ enum NamedRoutes {
   welcome('/welcome'),
   signUp('/sign-up'),
   login('/login'),
-  home('/home');
+  home('/home'),
+
+  defaultError('/error');
 
   final String route;
 
