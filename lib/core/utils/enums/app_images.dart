@@ -1,7 +1,8 @@
 import 'dart:io';
 
 enum AppImage {
-  backgroundImage('background.png');
+  backgroundImage('background.png'),
+  errorImage('error-image.jpg');
 
   const AppImage(this.name);
 
