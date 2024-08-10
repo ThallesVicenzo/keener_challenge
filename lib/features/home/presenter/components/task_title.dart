@@ -70,12 +70,21 @@ class TaskTile extends StatelessWidget {
                       Icons.arrow_forward,
                       color: Colors.white,
                     ),
-                    AppText(
-                      isCompleted ? 'Done ✅' : 'Not Done ❌',
-                      fontSize: FontSize.small,
-                      style: MyTextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: AppText(
+                        isCompleted ? 'Done ✅' : 'Not Done ❌',
+                        fontSize: FontSize.extraSmall,
+                        style: MyTextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
