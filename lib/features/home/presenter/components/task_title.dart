@@ -53,7 +53,7 @@ class TaskTile extends StatelessWidget {
               Flexible(
                 flex: 3,
                 child: AppText(
-                  'Hoje o sol brilha intensamente',
+                  title,
                   fontSize: FontSize.mediumSmall,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
