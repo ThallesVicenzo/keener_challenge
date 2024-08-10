@@ -3,6 +3,8 @@ enum NamedRoutes {
   signUp('/sign-up'),
   login('/login'),
   home('/home'),
+  addTask('/add-task'),
+  editTask('/edit-task'),
 
   defaultError('/error');
 
