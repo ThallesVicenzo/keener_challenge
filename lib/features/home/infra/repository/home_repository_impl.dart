@@ -28,4 +28,22 @@ class HomeRepositoryImpl implements HomeRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteTask(List<TaskEntity> newList) async {
+    try {
+      final request = await datasource.deleteTask(newList);
+      return Right(request);
+    } on FirebaseException catch (e) {
+      return Left(
+        NetworkFailure(
+          e.message,
+        ),
+      );
+    } catch (e) {
+      return Left(
+        GenericFailure(e.toString()),
+      );
+    }
+  }
 }
