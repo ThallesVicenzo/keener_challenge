@@ -5,6 +5,7 @@ import 'package:keener_challenge/features/home/domain/repository/home_repository
 
 abstract class HomeUsecase {
   Future<Either<Failure, List<TaskEntity>>> getTasks();
+  Future<Either<Failure, bool>> deleteTask(List<TaskEntity> newList);
 }
 
 class HomeUsecaseImpl implements HomeUsecase {
@@ -15,5 +16,10 @@ class HomeUsecaseImpl implements HomeUsecase {
   @override
   Future<Either<Failure, List<TaskEntity>>> getTasks() async {
     return await repository.getTasks();
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteTask(List<TaskEntity> newList) async {
+    return await repository.deleteTask(newList);
   }
 }
