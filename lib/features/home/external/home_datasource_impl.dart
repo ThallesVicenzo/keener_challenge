@@ -28,4 +28,22 @@ class HomeDatasourceImpl implements HomeDatasource {
 
     return tasks.map((e) => HomeModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<bool> deleteTask(TaskEntity entity) async {
+    final id = await storage.read(key: SecureStorageKeys.userId.key);
+
+    final value = HomeModel(
+      description: entity.description,
+      isCompleted: entity.isCompleted,
+      title: entity.title,
+    ).toJson();
+
+    await firestore.collection('tasks').doc(id).update(
+      {
+        'tasks': FieldValue.arrayRemove([value]),
+      },
+    );
+    return true;
+  }
 }
