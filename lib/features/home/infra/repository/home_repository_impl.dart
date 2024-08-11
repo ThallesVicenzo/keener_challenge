@@ -30,9 +30,9 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteTask(List<TaskEntity> newList) async {
+  Future<Either<Failure, bool>> deleteTask(TaskEntity item) async {
     try {
-      final request = await datasource.deleteTask(newList);
+      final request = await datasource.deleteTask(item);
       return Right(request);
     } on FirebaseException catch (e) {
       return Left(

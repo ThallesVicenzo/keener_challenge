@@ -5,5 +5,5 @@ import 'package:keener_challenge/core/errors/failure.dart';
 abstract class HomeRepository {
   Future<Either<Failure, List<TaskEntity>>> getTasks();
 
-  Future<Either<Failure, bool>> deleteTask(List<TaskEntity> newList);
+  Future<Either<Failure, bool>> deleteTask(TaskEntity item);
 }

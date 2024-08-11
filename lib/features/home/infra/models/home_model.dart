@@ -12,4 +12,12 @@ class HomeModel extends TaskEntity {
         title: json?['title'] ?? 'Undefined',
         description: json?['description'] ?? 'Undefined',
       );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'isCompleted': isCompleted,
+      'title': title,
+      'description': description,
+    };
+  }
 }

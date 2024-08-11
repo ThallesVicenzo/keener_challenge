@@ -39,12 +39,10 @@ abstract class HomeControllerBase with Store {
     );
   }
 
-  Future<void> deleteTask(int index, List<TaskEntity> list) async {
+  Future<void> deleteTask(TaskEntity item) async {
     deleteTaskState = LoadingState();
 
-    list.remove(list[index]);
-
-    final result = await usecase.deleteTask(list);
+    final result = await usecase.deleteTask(item);
 
     result.fold(
       (l) => deleteTaskState = ErrorState(error: l),

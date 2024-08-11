@@ -108,8 +108,9 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       confirmDismiss: (p0) async {
-                        await widget.controller
-                            .deleteTask(index, state.asSuccess);
+                        await widget.controller.deleteTask(
+                          state.asSuccess[index],
+                        );
                         return true;
                       },
                     ),
