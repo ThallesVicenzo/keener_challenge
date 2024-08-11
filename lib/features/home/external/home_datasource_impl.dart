@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:keener_challenge/core/domain/entities/task_entity.dart';
+import 'package:keener_challenge/core/infra/models/task_model.dart';
 import 'package:keener_challenge/core/secure_storage/keys/secure_storage_keys.dart';
 import 'package:keener_challenge/core/secure_storage/secure_storage.dart';
 import 'package:keener_challenge/features/home/infra/datasource/home_datasource.dart';
-import 'package:keener_challenge/features/home/infra/models/home_model.dart';
 
 class HomeDatasourceImpl implements HomeDatasource {
   final FirebaseFirestore firestore;
@@ -26,14 +26,14 @@ class HomeDatasourceImpl implements HomeDatasource {
       return [];
     }
 
-    return tasks.map((e) => HomeModel.fromJson(e)).toList();
+    return tasks.map((e) => TaskModel.fromJson(e)).toList();
   }
 
   @override
   Future<bool> deleteTask(TaskEntity entity) async {
     final id = await storage.read(key: SecureStorageKeys.userId.key);
 
-    final value = HomeModel(
+    final value = TaskModel(
       description: entity.description,
       isCompleted: entity.isCompleted,
       title: entity.title,
