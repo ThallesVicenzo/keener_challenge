@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:keener_challenge/core/page_state.dart';
 import 'package:keener_challenge/core/presenter/pages/default_erro_page.dart';
@@ -54,51 +55,58 @@ class _AddTaskPageState extends State<AddTaskPage> {
         title: 'Add Task',
         hasLeading: true,
       ),
-      body: CustomPaddingPage(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.deepPurple,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                children: [
-                  Form(
-                    key: widget.controller.formKeys[0],
-                    child: AppTextFormField(
-                      hintText: 'Task title...',
-                      validator: (value) =>
-                          widget.controller.validateField(value),
-                      controller: widget.controller.controllers[0],
+      body: Observer(builder: (context) {
+        if (widget.controller.state is LoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return CustomPaddingPage(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  children: [
+                    Form(
+                      key: widget.controller.formKeys[0],
+                      child: AppTextFormField(
+                        hintText: 'Task title...',
+                        validator: (value) =>
+                            widget.controller.validateField(value),
+                        controller: widget.controller.controllers[0],
+                      ),
                     ),
-                  ),
-                  Form(
-                    key: widget.controller.formKeys[1],
-                    child: AppTextFormField(
-                      hintText: 'description...',
-                      maxLines: 20,
-                      validator: (value) =>
-                          widget.controller.validateField(value),
-                      controller: widget.controller.controllers[1],
+                    Form(
+                      key: widget.controller.formKeys[1],
+                      child: AppTextFormField(
+                        hintText: 'description...',
+                        maxLines: 20,
+                        validator: (value) =>
+                            widget.controller.validateField(value),
+                        controller: widget.controller.controllers[1],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            AppPrimaryButton(
-              sufixIconVisibility: false,
-              title: 'Create Task',
-              onTap: () {
-                widget.controller.addTask(context);
-              },
-            ),
-          ],
-        ),
-      ),
+              const Spacer(),
+              AppPrimaryButton(
+                sufixIconVisibility: false,
+                title: 'Create Task',
+                onTap: () {
+                  widget.controller.addTask(context);
+                },
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
