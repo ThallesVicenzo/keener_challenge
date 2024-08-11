@@ -17,7 +17,10 @@ import '../components/task_title.dart';
 class HomePage extends StatefulWidget {
   final HomeController controller;
 
-  const HomePage({super.key, required this.controller});
+  const HomePage({
+    super.key,
+    required this.controller,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -86,37 +89,47 @@ class _HomePageState extends State<HomePage> {
             );
           }
           return CustomPaddingPage(
-            child: Column(
-              children: [
-                ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: state.asSuccess.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TaskTile(
-                      title: state.asSuccess[index].title,
-                      isCompleted: state.asSuccess[index].isCompleted,
-                      onTap: () {
-                        Modular.to.pushNamed(
-                          NamedRoutes.editTask.route,
-                          arguments: {
-                            'title': state.asSuccess[index].title,
-                            'description': state.asSuccess[index].description,
-                            'isCompleted': state.asSuccess[index].isCompleted,
+            child: RefreshIndicator(
+              onRefresh: widget.controller.getTasks,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    ListView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.asSuccess.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: TaskTile(
+                          title: state.asSuccess[index].title,
+                          isCompleted: state.asSuccess[index].isCompleted,
+                          onTap: () {
+                            Modular.to.pushNamed(
+                              NamedRoutes.editTask.route,
+                              arguments: {
+                                'title': state.asSuccess[index].title,
+                                'description':
+                                    state.asSuccess[index].description,
+                                'isCompleted':
+                                    state.asSuccess[index].isCompleted,
+                              },
+                            );
                           },
-                        );
-                      },
-                      confirmDismiss: (p0) async {
-                        await widget.controller.deleteTask(
-                          state.asSuccess[index],
-                        );
-                        return true;
-                      },
+                          confirmDismiss: (p0) async {
+                            await widget.controller.deleteTask(
+                              state.asSuccess[index],
+                            );
+                            return true;
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },
