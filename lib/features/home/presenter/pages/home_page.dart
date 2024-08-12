@@ -110,11 +110,8 @@ class _HomePageState extends State<HomePage> {
                             Modular.to.pushNamed(
                               NamedRoutes.editTask.route,
                               arguments: {
-                                'title': state.asSuccess[index].title,
-                                'description':
-                                    state.asSuccess[index].description,
-                                'isCompleted':
-                                    state.asSuccess[index].isCompleted,
+                                'entityList': state.asSuccess,
+                                'index': index,
                               },
                             );
                           },
