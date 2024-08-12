@@ -24,11 +24,23 @@ class AddTaskDatasourceImpl implements AddTaskDatasource {
       title: entity.title,
     ).toJson();
 
-    await firestore.collection('tasks').doc(id).update(
-      {
-        'tasks': FieldValue.arrayUnion([value]),
-      },
-    );
+    final docRef = firestore.collection('tasks').doc(id);
+
+    final docSnapshots = await docRef.get();
+
+    if (docSnapshots.exists) {
+      await docRef.update(
+        {
+          'tasks': FieldValue.arrayUnion([value]),
+        },
+      );
+    } else {
+      await firestore.collection('tasks').doc(id).set(
+        {
+          'tasks': FieldValue.arrayUnion([value]),
+        },
+      );
+    }
     return true;
   }
 }
