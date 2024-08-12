@@ -13,13 +13,13 @@ mixin _$HomeController on HomeControllerBase, Store {
       Atom(name: 'HomeControllerBase.state', context: context);
 
   @override
-  PageState<List<TaskEntity>> get state {
+  PageState<Stream<List<TaskEntity>>> get state {
     _$stateAtom.reportRead();
     return super.state;
   }
 
   @override
-  set state(PageState<List<TaskEntity>> value) {
+  set state(PageState<Stream<List<TaskEntity>>> value) {
     _$stateAtom.reportWrite(value, super.state, () {
       super.state = value;
     });

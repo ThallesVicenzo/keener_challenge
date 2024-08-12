@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:keener_challenge/core/domain/entities/task_entity.dart';
 import 'package:keener_challenge/core/page_state.dart';
 import 'package:keener_challenge/core/presenter/pages/default_erro_page.dart';
 import 'package:keener_challenge/core/presenter/widgets/app_bar/default_app_bar.dart';
@@ -32,7 +33,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     widget.controller.getTasks();
 
     _disposer = reaction(
@@ -76,16 +76,9 @@ class _HomePageState extends State<HomePage> {
       body: Observer(
         builder: (context) {
           final state = widget.controller.state;
-          if (state.isLoading) {
+          if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
-            );
-          }
-          if (state.asSuccess.isEmpty) {
-            return const Center(
-              child: AppText(
-                'You do not have any tasks, please create one!',
-              ),
             );
           }
           return CustomPaddingPage(
@@ -96,33 +89,48 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.asSuccess.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: TaskTile(
-                          title: state.asSuccess[index].title,
-                          isCompleted: state.asSuccess[index].isCompleted,
-                          onTap: () {
-                            Modular.to.pushNamed(
-                              NamedRoutes.editTask.route,
-                              arguments: {
-                                'entityList': state.asSuccess,
-                                'index': index,
+                    StreamBuilder<List<TaskEntity>>(
+                      stream: widget.controller.state.asSuccess,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: AppText(
+                              'You do not have any tasks, please create one!',
+                            ),
+                          );
+                        }
+
+                        final tasks = snapshot.data!;
+
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: tasks.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: TaskTile(
+                              title: tasks[index].title,
+                              isCompleted: tasks[index].isCompleted,
+                              onTap: () {
+                                Modular.to.pushNamed(
+                                  NamedRoutes.editTask.route,
+                                  arguments: {
+                                    'entityList': tasks,
+                                    'index': index,
+                                  },
+                                );
                               },
-                            );
-                          },
-                          confirmDismiss: (p0) async {
-                            await widget.controller.deleteTask(
-                              state.asSuccess[index],
-                            );
-                            return true;
-                          },
-                        ),
-                      ),
+                              confirmDismiss: (p0) async {
+                                await widget.controller.deleteTask(
+                                  tasks[index],
+                                );
+                                return true;
+                              },
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

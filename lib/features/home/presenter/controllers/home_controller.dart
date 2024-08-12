@@ -11,13 +11,16 @@ part 'home_controller.g.dart';
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store {
+  HomeControllerBase({
+    required this.usecase,
+    required this.firebaseAuth,
+  });
+
   final HomeUsecase usecase;
   final FirebaseAuth firebaseAuth;
 
-  HomeControllerBase({required this.usecase, required this.firebaseAuth});
-
   @observable
-  PageState<List<TaskEntity>> state = InitialState();
+  PageState<Stream<List<TaskEntity>>> state = InitialState();
 
   @observable
   PageState<bool> deleteTaskState = InitialState();

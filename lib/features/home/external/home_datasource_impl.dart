@@ -15,18 +15,23 @@ class HomeDatasourceImpl implements HomeDatasource {
   });
 
   @override
-  Future<List<TaskEntity>> getTasks() async {
+  Future<Stream<List<TaskEntity>>> getTasks() async {
     final id = await storage.read(key: SecureStorageKeys.userId.key);
 
-    final result = await firestore.collection('tasks').doc(id).get();
+    final snapshots = firestore.collection('tasks').doc(id).snapshots();
 
-    final List? tasks = result.data()?['tasks'];
+    return snapshots.map(
+      (snapshot) {
+        if (snapshot.exists) {
+          List<Map<String, dynamic>> tasksData =
+              List<Map<String, dynamic>>.from(snapshot.get('tasks'));
 
-    if (tasks == null) {
-      return [];
-    }
-
-    return tasks.map((e) => TaskModel.fromJson(e)).toList();
+          return tasksData.map((task) => TaskModel.fromJson(task)).toList();
+        } else {
+          return [];
+        }
+      },
+    );
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:keener_challenge/core/errors/failure.dart';
 import 'package:keener_challenge/features/home/domain/repository/home_repository.dart';
 
 abstract class HomeUsecase {
-  Future<Either<Failure, List<TaskEntity>>> getTasks();
+  Future<Either<Failure, Stream<List<TaskEntity>>>> getTasks();
   Future<Either<Failure, bool>> deleteTask(TaskEntity newList);
 }
 
@@ -14,7 +14,7 @@ class HomeUsecaseImpl implements HomeUsecase {
   HomeUsecaseImpl({required this.repository});
 
   @override
-  Future<Either<Failure, List<TaskEntity>>> getTasks() async {
+  Future<Either<Failure, Stream<List<TaskEntity>>>> getTasks() async {
     return await repository.getTasks();
   }
 
