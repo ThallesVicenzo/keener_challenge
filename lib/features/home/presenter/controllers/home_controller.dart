@@ -25,8 +25,6 @@ abstract class HomeControllerBase with Store {
   @observable
   PageState<bool> deleteTaskState = InitialState();
 
-  String? value;
-
   void logout() async {
     await FirebaseAuth.instance.signOut();
     Modular.to.navigate(NamedRoutes.welcome.route);
