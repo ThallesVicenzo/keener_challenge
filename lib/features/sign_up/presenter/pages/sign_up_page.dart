@@ -45,7 +45,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.all(8),
-                  height: 340,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.deepPurple,
@@ -133,6 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
