@@ -12,7 +12,7 @@ class HomeRepositoryImpl implements HomeRepository {
   HomeRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, List<TaskEntity>>> getTasks() async {
+  Future<Either<Failure, Stream<List<TaskEntity>>>> getTasks() async {
     try {
       final request = await datasource.getTasks();
       return Right(request);
