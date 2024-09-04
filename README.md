@@ -31,25 +31,20 @@ To ensure everything is set up correctly, you can verify the development environ
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   gh repo clone ThallesVicenzo/keener_challenge
    ```
    
-2. **Navigate to the project directory:**
-   ```bash
-   cd your-repository
-   ```
-   
-3. **Install dependencies:**
+2. **Install dependencies:**
    ```bash
    flutter pub get
    ```
    
-4. **Run the project:**
+3. **Run the project:**
    ```bash
    flutter run
    ```
    
-5. **APK:**
+4. **APK:**
    I have also provided an APK for testing on any ANDROID device.
    
 ---
